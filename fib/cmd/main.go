@@ -1,27 +1,21 @@
 package main
 
 import (
-	"fib/somemath"
 	"flag"
 	"fmt"
+
+	"itka4yk.go/fib"
 )
 
 func main() {
 
 	posPtr := flag.Int("n", 0, "fib position")
-	helpPtr := flag.Bool("h", false, "get help")
 	flag.Parse()
 
-	if *helpPtr {
-		fmt.Println("Usage main.exe [-n <number>] [-h]")
-	} else {
-		res, err := somemath.Fib(*posPtr)
-
-		if err != nil {
-			fmt.Printf("Error: %s", err)
-			return
-		}
-
-		fmt.Println(res)
+	if *posPtr > 20 {
+		fmt.Printf("n parameter more then 20")
+		return
 	}
+
+	fmt.Println(fib.Calc(*posPtr))
 }
