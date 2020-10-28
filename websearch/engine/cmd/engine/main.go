@@ -1,10 +1,11 @@
 package main
 
 import (
-	"flag"
+	"bufio"
 	"fmt"
 	"go-core/search/crawler/pkg/spider"
 	"log"
+	"os"
 	"strings"
 )
 
@@ -23,17 +24,15 @@ func main() {
 		}
 	}
 
-	s := flag.String("s", "", "word for search")
-	flag.Parse()
-
-	if *s == "" {
-		fmt.Println("Nothing to search")
-		return
-	}
-
-	for k, v := range res {
-		if strings.Contains(v, *s) {
-			fmt.Printf("Страница %s имеет адрес: %s\n", v, k)
+	input := bufio.NewScanner(os.Stdin)
+	fmt.Println("Enter word for search:")
+	for input.Scan() {
+		for k, v := range res {
+			if strings.Contains(v, input.Text()) {
+				fmt.Printf("Страница %s имеет адрес: %s\n", v, k)
+			}
 		}
+		fmt.Println("Enter word for search:")
 	}
+
 }
