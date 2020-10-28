@@ -10,9 +10,12 @@ import (
 	"golang.org/x/net/html"
 )
 
+// TScan - Тип сканера с реализованным методом Scan
+type TScan struct{}
+
 // Scan осуществляет рекурсивный обход ссылок сайта, указанного в URL,
 // с учётом глубины перехода по ссылкам, переданной в depth.
-func Scan(url string, depth int) (data map[string]string, err error) {
+func (s *TScan) Scan(url string, depth int) (data map[string]string, err error) {
 	data = make(map[string]string)
 
 	parse(url, url, depth, data)

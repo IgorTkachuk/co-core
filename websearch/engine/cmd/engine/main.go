@@ -9,20 +9,17 @@ import (
 	"strings"
 )
 
+type scanner interface {
+	Scan(url string, depth int) (data map[string]string, err error)
+}
+
 func main() {
+	s := new(spider.TScan)
+
 	urls := []string{"https://www.opennet.ru/", "https://go.dev/"}
 	res := make(map[string]string)
 
-	for _, url := range urls {
-		data, err := spider.Scan(url, 2)
-		if err != nil {
-			log.Printf("ошибка при сканировании сайта %s: %v\n", url, err)
-		}
-
-		for k, v := range data {
-			res[k] = v
-		}
-	}
+	res = collect(urls, s)
 
 	input := bufio.NewScanner(os.Stdin)
 	fmt.Println("Enter word for search:")
@@ -35,4 +32,20 @@ func main() {
 		fmt.Println("Enter word for search:")
 	}
 
+}
+
+func collect(urls []string, sc scanner) (res map[string]string) {
+	res = make(map[string]string)
+	for _, url := range urls {
+		data, err := sc.Scan(url, 2)
+		if err != nil {
+			log.Printf("ошибка при сканировании сайта %s: %v\n", url, err)
+		}
+
+		for k, v := range data {
+			res[k] = v
+		}
+	}
+
+	return res
 }
