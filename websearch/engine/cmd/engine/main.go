@@ -14,7 +14,7 @@ type scanner interface {
 }
 
 func main() {
-	s := new(spider.TScan)
+	s := new(spider.Instance)
 
 	urls := []string{"https://www.opennet.ru/", "https://go.dev/"}
 	res := make(map[string]string)
