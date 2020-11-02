@@ -8,10 +8,12 @@ import (
 	"testing"
 )
 
-func TestScanSite(t *testing.T) {
-	const url = "https://habr.com"
+func TestScan(t *testing.T) {
+	const url = "https://www.opennet.ru/"
 	const depth = 2
-	data, err := Scan(url, depth)
+	s := new(TestInstance)
+
+	data, err := s.Scan(url, depth)
 	if err != nil {
 		t.Fatal(err)
 	}
